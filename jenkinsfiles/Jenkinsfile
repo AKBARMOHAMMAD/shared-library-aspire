@@ -1,0 +1,49 @@
+@Library('jenkins-library') _
+import aspire.tools.*
+
+pipeline {
+    agent any
+
+    stages {
+        stage("Clean"){
+            steps{
+
+                script{
+                    deleteDir()
+                    echo "Emptied directory before clone..."
+                }
+            }
+        }
+
+        stage("Clone") {
+            steps {
+                script {
+                    //flagDeployQASuccess = 'false'
+                    //get repo name and branch from GitLab then set build name
+                    REPO = 'https://github.com/Prasad459/pet-clinic.git'
+                    BRANCH = 'master'
+                    APPNAME = 'petclinic'
+                    REPO_CREDENTIALSID = 'GitCredentials'
+                    currentBuild.displayName = "BRANCH:${BRANCH}, BUILD:#${BUILD_NUMBER}"
+                    echo "App Name = $APPNAME"
+
+
+                }
+
+                script {
+                    //checkout git repo
+                    def gitrepo = new aspire.tools.git()
+                    gitrepo.checkOut(REPO, BRANCH, REPO_CREDENTIALSID)
+                
+
+                }
+
+            }
+        }
+
+
+        
+    }
+
+
+}
