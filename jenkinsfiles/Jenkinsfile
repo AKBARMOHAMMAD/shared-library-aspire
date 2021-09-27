@@ -20,6 +20,9 @@ pipeline {
                 script {
                     //flagDeployQASuccess = 'false'
                     //get repo name and branch from GitLab then set build name
+                   // REPO = env.gitlabSourceRepoURL
+                   // BRANCH = env.gitlabBranch
+                   // APPNAME = env.gitlabSourceRepoName
                     REPO = 'https://github.com/Prasad459/pet-clinic.git'
                     BRANCH = 'master'
                     APPNAME = 'petclinic'
