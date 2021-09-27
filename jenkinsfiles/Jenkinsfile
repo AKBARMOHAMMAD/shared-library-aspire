@@ -32,7 +32,7 @@ pipeline {
 
                 script {
                     //checkout git repo
-                    def gitrepo = new aspire.tools.git()
+                    def gitrepo = new git()
                     gitrepo.checkOut(REPO, BRANCH, REPO_CREDENTIALSID)
                 
 
