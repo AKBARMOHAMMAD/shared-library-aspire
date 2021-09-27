@@ -1,5 +1,5 @@
 @Library('jenkins-library') _
-import aspire.tools.*
+//import aspire.tools.*
 
 pipeline {
     agent any
