@@ -23,9 +23,9 @@ pipeline {
                    // REPO = env.gitlabSourceRepoURL
                    // BRANCH = env.gitlabBranch
                    // APPNAME = env.gitlabSourceRepoName
-                    REPO = 'https://github.com/Prasad459/spring-boot-application-example.git'
+                    REPO = 'https://github.com/Prasad459/pet-clinic.git'
                     BRANCH = 'master'
-                    APPNAME = 'spring-boot-application'
+                    APPNAME = 'petclinic'
                     REPO_CREDENTIALSID = 'GitCredentials'
                     currentBuild.displayName = "BRANCH:${BRANCH}, BUILD:#${BUILD_NUMBER}"
                     echo "App Name = $APPNAME"
