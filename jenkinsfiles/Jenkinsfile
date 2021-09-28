@@ -121,10 +121,11 @@ pipeline {
                     if (UseBuildTool == 'maven') {
                         def buildartifact = new build_maven()
                         buildartifact.buildArtifact(pomDir, resolverreleaseRepo, resolversnapshotRepo, ArtifactCredentialsID, mavenGoal)
-                    } else if (UseBuildTool == 'gradle'){
+                    }
+                     /****else if (UseBuildTool == 'gradle'){
                         def buildgradle = new build_gradle()
                         buildgradle.newartifact(gradleRoot, APPNAME)
-                    }
+                    }****/
                     /****else if (UseBuildTool == 'ant'){
                      def buildant = new bcbs.tools.build_ant()
                      buildant.newartifact(APPNAME)
