@@ -136,6 +136,38 @@ pipeline {
                 }
             }
         }
+         stage('Build Image') {
+            /* only works on "dlap" agent"*/
+            when {
+                expression {imageTool == 'docker'}
+            }
+            steps{
+
+                script {
+                    def builddocker = new build_docker()
+                    builddocker.buildImage(APPNAME, DOCKER_REPO, dockerDir)
+
+                }
+
+            }
+        }
+        stage('Push Image') {
+
+            when {
+                expression {imageTool == 'docker'}
+            }
+            steps {
+                script{
+                    if (imageTool == 'docker') {
+                        def deploydocker = new upload_dockerimage()
+                        deploydocker.uploadImage(APPNAME, DOCKER_URL, DOCKER_REPO, REGISTRY_CREDS)
+
+                    } else {
+                        echo "No Image Tool Selected - Skipping..."
+                    }
+                }
+            }
+        }
 
 
         
