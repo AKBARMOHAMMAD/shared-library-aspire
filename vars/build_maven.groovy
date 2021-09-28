@@ -2,7 +2,7 @@ def buildArtifact(pomDir, resolverreleaseRepo, resolversnapshotRepo, ArtifactCre
     script {
         rtServer(
                 id: "artifactory",
-                url: "http://44.197.226.58:8081/artifactory",
+                url: "http://3.237.61.141:8081/artifactory",
                 credentialsId: ArtifactCredentialsID
         )
         rtMavenResolver(
