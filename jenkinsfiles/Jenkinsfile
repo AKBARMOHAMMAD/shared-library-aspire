@@ -43,6 +43,98 @@ pipeline {
 
             }
         }
+        stage('Import') {
+            steps {
+
+                script {
+                    //every app directory must have an pipeline.yml file with the app properties
+                    //those properties are imported here
+                    //if new properties are added they must be added here as well
+                    echo "Reading properties for pipeline variables located in pipeline.YML"
+                    yaml = readYaml file: 'pipeline.yml'
+                    sh 'cat pipeline.yml'
+                    AppVersion = yaml.version
+                    ArtifactCredentialsID = yaml.ArtifactCredentialsID
+                    deployerreleaseRepo = yaml.deployerreleaseRepo
+                    deployersnapshotRepo = yaml.deployersnapshotRepo
+                    resolverreleaseRepo = yaml.resolverreleaseRepo
+                    resolversnapshotRepo = yaml.resolversnapshotRepo
+                    
+                    SonarQube = yaml.SonarQube
+                    sonarhosturl = yaml.sonarhosturl
+                    sonarprojectKey = yaml.sonarprojectKey
+                    sonarlogin = yaml.sonarlogin
+
+                    sonarGoal = yaml.sonarGoal
+                    //sonartest = yaml.sonartest
+
+                    UseBuildTool = yaml.UseBuildTool
+                    imageTool = yaml.imageTool
+                    UploadArtifact = yaml.UploadArtifact
+                    
+                    pomDir = yaml.pomDir
+                    
+                    dockerDir = yaml.dockerDir
+                    DOCKER_REGISTRY = yaml.DOCKER_REGISTRY
+                    DOCKER_URL = yaml.DOCKER_URL
+                    DOCKER_REPO = yaml.DOCKER_REPO
+                    REGISTRY_CREDS = yaml.REGISTRY_CREDS
+                    
+
+                   
+
+                    
+                    POMVersion = yaml.POMVersion
+                    POMArtifactID = yaml.POMArtifactID
+
+                    tagVersion = "'${BRANCH}'.'${AppVersion}'"
+                    mavenGoal = yaml.mavenGoal
+                    
+
+        
+
+                    
+                    
+
+                    
+                
+                    
+
+
+
+                    echo "Found AppVersion - ${AppVersion}"
+
+
+                }
+
+
+            }
+        }
+
+
+
+
+        stage('Build') {
+
+            steps {
+                script {
+                    if (UseBuildTool == 'maven') {
+                        def buildartifact = new build_maven()
+                        buildartifact.buildArtifact(pomDir, resolverreleaseRepo, resolversnapshotRepo, ArtifactCredentialsID, mavenGoal)
+                    } else if (UseBuildTool == 'gradle'){
+                        def buildgradle = new build_gradle()
+                        buildgradle.newartifact(gradleRoot, APPNAME)
+                    }
+                    /****else if (UseBuildTool == 'ant'){
+                     def buildant = new bcbs.tools.build_ant()
+                     buildant.newartifact(APPNAME)
+                     } ****/
+                    else {
+                        echo "No Build Tool Defined"
+                    }
+                }
+            }
+        }
 
 
         
